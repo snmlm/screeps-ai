@@ -12,6 +12,7 @@ export default class CreepExtension extends Creep {
         if (!(this.memory.role in roles)) {
             this.log(`找不到对应的 creepConfig`, 'yellow')
             this.say('我凉了！')
+            this.suicide()
             return
         }
 
