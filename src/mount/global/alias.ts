@@ -403,12 +403,12 @@ export default [
  * 帮助文档中的标题
  */
 const projectTitle = [
-    String.raw`        __  __      ____  ______      __    __         _____                               `,
-    String.raw`       / / / /___  / __ \/ ____/___  / /___/ /_  __   / ___/_____________  ___  ____  _____`,
-    String.raw`      / /_/ / __ \/ /_/ / / __/ __ \/ / __  / / / /   \__ \/ ___/ ___/ _ \/ _ \/ __ \/ ___/`,
-    String.raw`     / __  / /_/ / ____/ /_/ / /_/ / / /_/ / /_/ /   ___/ / /__/ /  /  __/  __/ /_/ (__  ) `,
-    String.raw`    /_/ /_/\____/_/    \____/\____/_/\__,_/\__, /   /____/\___/_/   \___/\___/ .___/____/  `,
-    String.raw`                                          /____/                            /_/              openSource at github - ${createLink('hopgoldy/screeps-ai', 'https://github.com/HoPGoldy/my-screeps-ai')}`
+    String.raw`      _____                               `,
+    String.raw`     / ___/_____________  ___  ____  _____`,
+    String.raw`     \__ \/ ___/ ___/ _ \/ _ \/ __ \/ ___/`,
+    String.raw`    ___/ / /__/ /  /  __/  __/ /_/ (__  ) `,
+    String.raw`   /____/\___/_/   \___/\___/ .___/____/  `,
+    String.raw`                           /_/              openSource at github - ${createLink('snmlm/screeps-ai', 'https://github.com/snmlm/screeps-ai')}`
 ]
 
 // 资源常量控制台帮助
