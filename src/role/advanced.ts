@@ -114,17 +114,18 @@ const roles: {
             // 如果目标建筑物太远了，就移动过去
             else if (result === ERR_NOT_IN_RANGE) creep.goTo(structure.pos)
             else if (result === ERR_FULL) {
-                creep.say(`${task.target} 满了`)
+                creep.say(`${task.target} FULL`)
                 if (task.target === STRUCTURE_TERMINAL) Game.notify(`[${creep.room.name}] ${task.target} 满了，请尽快处理`)
-                creep.room.hangCenterTask()
+                if (task.target === 'centerLink') creep.room.deleteCurrentCenterTask()
+                else creep.room.hangCenterTask()
             }
             // 资源不足就返回 source 阶段
             else if (result === ERR_NOT_ENOUGH_RESOURCES) {
-                creep.say(`取出资源`)
+                creep.say(`${ERR_NOT_ENOUGH_RESOURCES}`)
                 return true
             }
             else {
-                creep.say(`存入 ${result}`)
+                creep.say(`in ${result}`)
                 creep.room.hangCenterTask()
             }
  
@@ -389,6 +390,7 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
             if (result === OK) return true
             else if (result === ERR_NOT_ENOUGH_RESOURCES) {
                 creep.room.deleteCurrentRoomTransferTask()
+                creep.room.addRoomTransferTask({type: ROOM_TRANSFER_TASK.LAB_OUT},0);
             }
             else if (result != ERR_NOT_IN_RANGE) creep.say(`labInA ${result}`)
         },
@@ -400,11 +402,6 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
                 return true
             }
             
-            //上身有其他资源，放回去
-            if(creep.store.getUsedCapacity() != creep.store.getUsedCapacity(targetResource.type)){
-                if (!clearCarryingEnergy(creep)) return false
-            }
-
             const targetLab: StructureLab = Game.getObjectById(targetResource.id)
 
             // 转移资源
@@ -416,6 +413,8 @@ export const transferTaskOperations: { [taskType: string]: transferTaskOperation
                 // 保证在产物移出的时候可以一次就拿完
                 creep.room.handleLabInTask(targetResource.type, 0)
                 return true
+            } else if (result == ERR_NOT_ENOUGH_RESOURCES){
+                return true;
             } else if (result == ERR_INVALID_TARGET){
                 //搬空labin;
                 //发布LAB_OUT，并放置为第一个，不会同时存在两个LAB_OUT

@@ -34,6 +34,13 @@ export default class LabExtension extends StructureLab {
         if (this.id in this.room.memory.lab.outLab) this.room.memory.lab.outLab[this.id] = this.store[this.mineralType] | 0
     }
 
+     /**
+     * 建筑完成时
+     */
+    public onBuildComplete(): void {
+        this.room.linit()
+    }
+
     /**
      * lab 集群的工作总入口
      */

@@ -187,6 +187,14 @@ export default class CreepExtension extends Creep {
                     ) costs.set(struct.pos.x, struct.pos.y, 0xff)
                 })
 
+                room.find(FIND_CONSTRUCTION_SITES).forEach(site =>{
+                    if (site.structureType !== STRUCTURE_ROAD 
+                        && site.structureType !== STRUCTURE_RAMPART
+                        && site.structureType !== STRUCTURE_CONTAINER) {
+                        costs.set(site.pos.x, site.pos.y, 0xff)
+                    }
+                })
+
                 // 避开房间中的禁止通行点
                 const restrictedPos = room.getRestrictedPos()
                 for (const creepName in restrictedPos) {
@@ -282,7 +290,6 @@ export default class CreepExtension extends Creep {
         const moveResult = this._move(target) 
 
         if (moveResult != OK || target instanceof Creep) return moveResult
-        
         const currentPos = `${this.pos.x}/${this.pos.y}`
         // 如果和之前位置重复了就分析撞上了啥
         if (this.memory.prePos && currentPos == this.memory.prePos) {

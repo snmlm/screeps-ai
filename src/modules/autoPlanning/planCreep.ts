@@ -137,29 +137,12 @@ const releasePlans: CreepReleasePlans = {
             // 优先用 upgradeLink
             ({ room, upgradeLinkId,storageId,storageEnergy }: UpgraderPlanStats) => {
                 if (!upgradeLinkId) return false
-                if (!storageId || storageEnergy < UPGRADE_WITH_STORAGE[UPGRADE_WITH_STORAGE.length - 1].energy ) return false
+                if (!storageId || storageEnergy < UPGRADE_WITH_STORAGE[UPGRADE_WITH_STORAGE.length - 1].energy) return false
 
                 // 发布升级单位给 link
                 addUpgrader(room.name, [0], upgradeLinkId)
 
                 room.log('将从 upgradeLink 获取能量', 'upgrader', 'green')
-                return true
-            },
-        
-            // 用终端能量发布 upgrader
-            ({ room, terminalId, terminalEnergy }: UpgraderPlanStats) => {
-                if (!terminalId || terminalEnergy < UPGRADE_WITH_TERMINAL[UPGRADE_WITH_TERMINAL.length - 1].energy ) return false
-        
-                // 遍历配置项进行 upgrader 发布
-                UPGRADE_WITH_TERMINAL.find(config => {
-                    // 找到对应的配置项了，发布对应数量的 upgrader
-                    if (terminalEnergy > config.energy) {
-                        addUpgrader(room.name, new Array(config.num).fill(undefined).map((_, i) => i), terminalId)
-                        room.log(`将从 terminal 获取能量，发布数量 * ${config.num}`, 'upgrader', 'green')
-                        return true
-                    }
-                })
-
                 return true
             },
 
@@ -180,8 +163,27 @@ const releasePlans: CreepReleasePlans = {
                 return true
             },
 
+            // // 用终端能量发布 upgrader
+            // ({ room, terminalId, terminalEnergy }: UpgraderPlanStats) => {
+            //     if (!terminalId || terminalEnergy < UPGRADE_WITH_TERMINAL[UPGRADE_WITH_TERMINAL.length - 1].energy ) return false
+        
+            //     // 遍历配置项进行 upgrader 发布
+            //     UPGRADE_WITH_TERMINAL.find(config => {
+            //         // 找到对应的配置项了，发布对应数量的 upgrader
+            //         if (terminalEnergy > config.energy) {
+            //             addUpgrader(room.name, new Array(config.num).fill(undefined).map((_, i) => i), terminalId)
+            //             room.log(`将从 terminal 获取能量，发布数量 * ${config.num}`, 'upgrader', 'green')
+            //             return true
+            //         }
+            //     })
+
+            //     return true
+            // },
+
             // 兜底，从 sourceContainer 中获取能量
-            ({ room, sourceContainerIds }: UpgraderPlanStats) => {
+            ({ room, sourceContainerIds,storageId}: UpgraderPlanStats) => {
+                //有了容器，就不从container里获取
+                if(storageId) return true
                 // 有援建单位，每个 container 少发布一个 upgrader
                 const upgraderIndexs = creepApi.has(`${room.name} RemoteUpgrader`) ? [ 0, 1 ] : [ 0, 1, 2 ]
 

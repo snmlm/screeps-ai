@@ -36,18 +36,18 @@ export default class FactoryExtension extends StructureFactory {
     private runFactory(): boolean {
         switch (this.room.memory.factory.state) {
             case FACTORY_STATE.PREPARE: 
-                if (Game.time % 5) return false
+                //if (Game.time % 5) return false
                 this.prepare()
             break
             case FACTORY_STATE.GET_RESOURCE:
-                if (Game.time % 5) return false
+                //if (Game.time % 5) return false
                 this.getResource()
             break
             case FACTORY_STATE.WORKING:
                 this.working()
             break
             case FACTORY_STATE.PUT_RESOURCE:
-                if (Game.time % 5) return false
+                //if (Game.time % 5) return false
                 this.putResource()
             break
         }

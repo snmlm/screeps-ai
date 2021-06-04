@@ -134,6 +134,13 @@ export const planLayout = function(room: Room): OK | ERR_NOT_OWNER | ERR_NOT_FOU
                 if (result === OK) needBuild = true
             })
         })
+        if(level == 6){
+            room.createFlag(center[0]+currentLevelLayout[STRUCTURE_LAB][0][0],center[1]+currentLevelLayout[STRUCTURE_LAB][0][1],room.name+'lab1')
+            room.createFlag(center[0]+currentLevelLayout[STRUCTURE_LAB][1][0],center[1]+currentLevelLayout[STRUCTURE_LAB][1][1],room.name+'lab2')
+        }
+        if(level == 7){
+            room.createFlag(Game.flags[room.name+'lab2'].pos.x + 1,Game.flags[room.name+'lab2'].pos.y,room.name+'Boost')
+        }
     })
 
     // 有需要建造的，发布建造者
