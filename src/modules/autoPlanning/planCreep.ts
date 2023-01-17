@@ -186,7 +186,7 @@ const releasePlans: CreepReleasePlans = {
                 if(storageId) return true
                 // 有援建单位，每个 container 少发布一个 upgrader
                 const upgraderIndexs = creepApi.has(`${room.name} RemoteUpgrader`) ? [ 0, 1 ] : [ 0, 1, 2 ]
-
+ 
                 // 遍历所有 container，发布对应数量的 upgrader
                 sourceContainerIds.forEach((containerId, index) => {
                     addUpgrader(room.name, upgraderIndexs.map(i => index + (i * 2)), containerId)
@@ -353,7 +353,23 @@ const roleToRelease: { [role in BaseRoleConstant | AdvancedRoleConstant]: (room:
         }, room.name)
 
         return OK
-    }
+    },
+        
+    /**
+     * 修理着
+     * @param room 要发布角色的房间
+     * @param num 要发布的刷墙工数量
+     */
+    'roader': function(room: Room, num: number = 1): OK {
+        Array(num).fill(undefined).forEach((_, index) => {
+            creepApi.add(`${room.name} road${index}`, 'roader', {
+                sourceId: room.getAvailableSource().id,
+            }, room.name)
+        })
+    
+        return OK
+    },
+
 }
 
 /**

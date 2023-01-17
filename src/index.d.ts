@@ -80,7 +80,8 @@ type BaseRoleConstant =
     'upgrader' |
     'filler' |
     'builder' |
-    'repairer'
+    'repairer'|
+    'roader'
 
 // 房间高级运营
 type AdvancedRoleConstant = 
@@ -453,6 +454,8 @@ interface CreepMemory {
     depositType?: DepositConstant
     // 要填充的墙 id 
     fillWallId?: string
+    // 修理 id 
+    repairId?: string | 1 
     // manager 特有 要填充能量的建筑 id
     fillStructureId?: string
     // 建筑工特有，当前缓存的建筑工地（目前只有外矿采集者在用）

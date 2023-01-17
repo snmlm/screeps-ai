@@ -405,6 +405,68 @@ const roles: {
             if (creep.store.getUsedCapacity() === 0) return true
         },
         bodys: 'worker'
+    }),
+    /**
+     * 修路者
+     * 从指定结构中获取能量 > 维修房间内的建筑
+     * 
+     * @param spawnRoom 出生房间名称
+     * @param sourceId 要挖的矿 id
+     */
+     roader: (data: WorkerData): ICreepConfig => ({
+        // 根据敌人威胁决定是否继续生成
+        isNeed: room => {
+            const damagedStructures = <AnyStructure[]>room.find(FIND_STRUCTURES, {
+                filter: s => s.hits < s.hitsMax &&
+                    // 墙壁稍后会单独修
+                    s.structureType != STRUCTURE_RAMPART &&
+                    s.structureType != STRUCTURE_WALL &&
+                    // container 由 harvester 专门维护
+                    s.structureType != STRUCTURE_CONTAINER
+            })
+            return damagedStructures.length > 0 ? true : false
+        },
+        source: creep => {
+            creep.getEngryFrom(Game.getObjectById(data.sourceId) || creep.room.storage || creep.room.terminal)
+
+            if (creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) return true
+        },
+        // 一直修墙就完事了
+        target: creep => {
+            if (!creep.memory.repairId) {
+                const damagedStructures = <AnyStructure[]>creep.room.find(FIND_STRUCTURES, {
+                    filter: s => s.hits < s.hitsMax &&
+                        // 墙壁稍后会单独修
+                        s.structureType != STRUCTURE_RAMPART &&
+                        s.structureType != STRUCTURE_WALL &&
+                        // container 由 harvester 专门维护
+                        s.structureType != STRUCTURE_CONTAINER
+                })
+    
+                // 找到最近的受损建筑并更新缓存
+                if (damagedStructures.length > 0) {
+                    creep.memory.repairId = creep.pos.findClosestByRange(damagedStructures).id
+                }
+                else {
+                    creep.memory.repairId = 1
+                }
+            }
+            // 代码能执行到这里就说明缓存肯定不为空
+            // 如果是 1 说明都不需要维修
+            if (creep.memory.repairId != 1) {
+                const road = Game.getObjectById<AnyStructure>(creep.memory.repairId)
+                if (!road) return false
+                if (road.hits < road.hitsMax) {
+                    const result = creep.repair(road)
+                    if (result == ERR_NOT_IN_RANGE) creep.goTo(road.pos)
+                }
+                else delete creep.memory.repairId
+            }
+            else delete creep.memory.repairId
+
+            if (creep.store.getUsedCapacity() === 0) return true
+        },
+        bodys: 'worker'
     })
 }
 

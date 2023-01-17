@@ -13,8 +13,8 @@ export const loop = ErrorMapper.wrapLoop(() => {
     creepNumberListener()
 
     // 所有建筑、creep、powerCreep 执行工作
-    //doing(Game.structures, Game.creeps, Game.powerCreeps)
-    doing(_.filter(Game.structures,structure=>
+    doing(Game.structures, Game.creeps, Game.powerCreeps)
+    /*doing(_.filter(Game.structures,structure=>
         structure.structureType == STRUCTURE_SPAWN
         ||structure.structureType == STRUCTURE_TOWER
         ||structure.structureType == STRUCTURE_CONTROLLER
@@ -29,7 +29,7 @@ export const loop = ErrorMapper.wrapLoop(() => {
         ),
     Game.creeps
     //,Game.powerCreeps
-    );
+    );*/
     // 搓 pixel
     generatePixel()
 

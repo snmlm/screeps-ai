@@ -40,7 +40,7 @@ export function generateBody(availableEnergy: number,bodyparts: BodyPartConstant
 export const bodyConfigs1 = {
     upgrader: {
         default: {
-            pattern  : [WORK, WORK, WORK, CARRY, MOVE],
+            pattern  : [WORK, CARRY, MOVE],
             sizeLimit: Infinity,
 		},
         rcl2: {
@@ -100,22 +100,22 @@ export const bodyConfigs: BodyConfigs = {
      * 升级单位
      */
     upgrader: getBodyConfig(
-        { [WORK]: 1, [CARRY]: 1, [MOVE]: 1 },//200
-        { [WORK]: 3, [CARRY]: 1, [MOVE]: 1 },//400
-        { [WORK]: 6, [CARRY]: 2, [MOVE]: 2 },//800
-        { [WORK]: 9, [CARRY]: 3, [MOVE]: 3 },//1200
-        { [WORK]: 12, [CARRY]: 4, [MOVE]: 4 },//1600
-        { [WORK]: 15, [CARRY]: 5, [MOVE]: 5 },//2000
-        { [WORK]: 18, [CARRY]: 6, [MOVE]: 6 },//2400
-        { [WORK]: 21, [CARRY]: 7, [MOVE]: 7 }//2800
         //{ [WORK]: 1, [CARRY]: 1, [MOVE]: 1 },//200
-        //{ [WORK]: 2, [CARRY]: 2, [MOVE]: 2 },//400
-        //{ [WORK]: 3, [CARRY]: 3, [MOVE]: 3 },//600
-        //{ [WORK]: 4, [CARRY]: 4, [MOVE]: 4 },//800
-        //{ [WORK]: 6, [CARRY]: 6, [MOVE]: 6 },//1200
-        //{ [WORK]: 9, [CARRY]: 9, [MOVE]: 9 },//1800
-        //{ [WORK]: 17, [CARRY]: 9, [MOVE]: 17 },//3000
-        //{ [WORK]: 12, [CARRY]: 12, [MOVE]: 12 }//2400
+        //{ [WORK]: 3, [CARRY]: 2, [MOVE]: 2 },//400
+        //{ [WORK]: 6, [CARRY]: 2, [MOVE]: 2 },//800
+        //{ [WORK]: 9, [CARRY]: 3, [MOVE]: 3 },//1200
+        //{ [WORK]: 12, [CARRY]: 4, [MOVE]: 4 },//1600
+        //{ [WORK]: 15, [CARRY]: 5, [MOVE]: 5 },//2000
+        //{ [WORK]: 18, [CARRY]: 6, [MOVE]: 6 },//2400
+        //{ [WORK]: 21, [CARRY]: 7, [MOVE]: 7 }//2800
+        { [WORK]: 1, [CARRY]: 1, [MOVE]: 1 },//200
+        { [WORK]: 2, [CARRY]: 2, [MOVE]: 2 },//400
+        { [WORK]: 3, [CARRY]: 3, [MOVE]: 3 },//600
+        { [WORK]: 4, [CARRY]: 4, [MOVE]: 4 },//800
+        { [WORK]: 6, [CARRY]: 6, [MOVE]: 6 },//1200
+        { [WORK]: 9, [CARRY]: 9, [MOVE]: 9 },//1800
+        { [WORK]: 17, [CARRY]: 9, [MOVE]: 17 },//3000
+        { [WORK]: 12, [CARRY]: 12, [MOVE]: 12 }//2400
         //[WORK, WORK, WORK, CARRY, MOVE],3*100+50+50
     ),
 
@@ -337,14 +337,14 @@ export const baseLayout: BaseLayout = {
     4: {
         [STRUCTURE_EXTENSION]: [[3,-1],[2,-3],[3,-2],[2,-4],[3,-3],[4,-2],[3,-4],[4,-3],[-1,3],[-3,1]],
         [STRUCTURE_STORAGE]: [[0,0]],
-        [STRUCTURE_ROAD]: [[-2,1],[1,2],[0,3],[1,2],[2,1]],
+        [STRUCTURE_ROAD]: [[-2,1],[-1,2],[0,3],[1,2],[2,1],[-1,-1],[-1,1],[1,1],[1,-1]],
         [STRUCTURE_RAMPART]: [[0,0],[0,-1],[0,-2]]
     },
     5: {
         [STRUCTURE_EXTENSION]: [[-2,3],[-3,2],[-2,4],[-3,3],[-4,2],[-3,4],[-4,3],[-4,0],[-5,1],[-5,0]],
         [STRUCTURE_TOWER]: [[-1,0]],
         [STRUCTURE_LINK]: [[1,0]],
-        [STRUCTURE_ROAD]: [[-2,1],[-1,2],[0,3],[-1,4],[-2,5],[-3,5],[-4,4],[-5,3],[-5,2],[-4,1]],
+        [STRUCTURE_ROAD]: [[-1,4],[-2,5],[-3,5],[-4,4],[-5,3],[-5,2],[-4,1]],
         [STRUCTURE_RAMPART]: [[1,0],[-1,0]]
     },
     6: {
@@ -352,7 +352,7 @@ export const baseLayout: BaseLayout = {
         [STRUCTURE_LAB]: [[4,3],[3,4],[2,3]],
         [STRUCTURE_TERMINAL]: [[2,2]],
         [STRUCTURE_EXTRACTOR]: [null],
-        [STRUCTURE_ROAD]: [[1,2],[2,1],[4,1],[4,2],[3,3],[2,4],[1,4],[4,4],[5,5]],
+        [STRUCTURE_ROAD]: [[4,1],[4,2],[3,3],[2,4],[1,4],[4,4],[5,5]],
         [STRUCTURE_RAMPART]: [[2,2],[4,3],[3,4],[2,3]]
     },
     7: {
