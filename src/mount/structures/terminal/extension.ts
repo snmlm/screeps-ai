@@ -33,8 +33,8 @@ export default class TerminalExtension extends StructureTerminal {
      */
     public onBuildComplete(): void {
         // 有 extractor 了，发布矿工并添加对应的共享协议
-        if (this.room.extractor) {
-            this.room.releaseCreep('miner')
+        //if (this.room.extractor) {
+            //this.room.releaseCreep('miner')
             const resc = [RESOURCE_HYDROGEN,RESOURCE_OXYGEN,RESOURCE_UTRIUM,RESOURCE_KEANIUM,RESOURCE_LEMERGIUM,RESOURCE_ZYNTHIUM,RESOURCE_CATALYST];
             for(var r in resc){
                 if(resc[r] == this.room.mineral.mineralType){
@@ -44,7 +44,7 @@ export default class TerminalExtension extends StructureTerminal {
                     this.addTask(resc[r], 1000, terminalModes.get, terminalChannels.share)
                 }
             }
-        }
+        //}
     }
 
     /**

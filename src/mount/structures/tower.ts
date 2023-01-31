@@ -54,11 +54,11 @@ export default class TowerExtension extends StructureTower {
         }
 
         this.fire(enemys)
-        if (this.room.controller.checkEnemyThreat()) {
+        /*if (this.room.controller.checkEnemyThreat()) {
             // 启动主动防御模式
             this.room.memory.defenseMode = 'active'
             // this.log('已启动主动防御')
-        }
+        }*/
 
         // 如果能量低了就发布填充任务
         this.requireEnergy(700)
