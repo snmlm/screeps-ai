@@ -695,6 +695,15 @@ export default class RoomConsole extends RoomExtension {
                         functionName: 'spawnDismantleGroupL'
                     },
                     {
+                        title: '孵化拆墙',
+                        describe: ' 无boost 的黄球',
+                        params: [
+                            { name: 'targetFlagName', desc: `[可选] 进攻旗帜名称，默认为 ${DEFAULT_FLAG_NAME.ATTACK}` },
+                            { name: 'keepSpawn', desc: '[可选] 是否持续生成，置为 true 时可以执行 creepApi.remove("creepName") 来终止持续生成，默认为 false' }
+                        ],
+                        functionName: 'spawnDismantleL'
+                    },
+                    {
                         title: '孵化掠夺者',
                         params: [
                             { name: 'sourceFlagName', desc: `[可选] 要搜刮的建筑上插好的旗帜名，默认为 ${DEFAULT_FLAG_NAME.REIVER}` },

@@ -110,6 +110,7 @@ type WarRoleConstant =
     'doctor' |
     'boostDoctor' |
     'dismantler' |
+    'dismantlerL' |
     'boostDismantler' |
     'apocalypsex' |
     'apocalypse' |
@@ -303,6 +304,7 @@ type BodyAutoConfigConstant =
     'healer' |
     'healerx' |
     'dismantler' |
+    'dismantlerL' |
     'remoteHarvester'
 
 /**

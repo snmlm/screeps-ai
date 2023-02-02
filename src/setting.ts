@@ -244,6 +244,20 @@ export const bodyConfigs: BodyConfigs = {
     ),
 
     /**
+     * 拆除者身体
+     */
+     dismantlerL: getBodyConfig(
+        { [WORK]: 2, [MOVE]: 2 },
+        { [WORK]: 4, [MOVE]: 4 },
+        { [WORK]: 5, [MOVE]: 5 },
+        { [WORK]: 6, [MOVE]: 7 },
+        { [WORK]: 9, [MOVE]: 9 },
+        { [WORK]: 11, [MOVE]: 11 },
+        { [WORK]: 20, [MOVE]: 20 },
+        { [WORK]: 25, [MOVE]: 25 }
+    ),
+
+    /**
      * 外矿采集者
      * 和采集者的区别就是外矿采集者拥有更多的 CARRY
      */

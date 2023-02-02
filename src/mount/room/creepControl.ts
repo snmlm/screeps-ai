@@ -180,6 +180,22 @@ export default class CreepControl extends RoomConsole {
     }
 
     /**
+     * 孵化 拆墙小组
+     * 
+     * @param targetFlagName 进攻旗帜名称
+     * @param keepSpawn 是否持续生成
+     */
+     public spawnDismantleL(targetFlagName: string = '', keepSpawn: boolean = false): string {
+        const dismantlerName = `${this.name} dismantlerL ${Game.time}`
+        creepApi.add(dismantlerName, 'dismantlerL', {
+            targetFlagName: targetFlagName || DEFAULT_FLAG_NAME.ATTACK,
+            keepSpawn
+        }, this.name)
+
+        return `已发布拆墙无boost，正在孵化，GoodLuck Commander`
+    }
+
+    /**
      * 孵化 boost 拆墙小组
      * 
      * @param targetFlagName 进攻旗帜名称

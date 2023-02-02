@@ -729,23 +729,42 @@ export default class CreepExtension extends Creep {
         // 获取旗帜
         let attackFlag = this.getFlag(flagName)
         if (!attackFlag) return false
-        // 治疗单位
-        const healer = Game.creeps[healerName]
+        
+        if(healerName){
+            // 治疗单位
+            const healer = Game.creeps[healerName]
 
-        // 如果 creep 不在房间里 则一直向旗帜移动
-        if (!attackFlag.room || (attackFlag.room && this.room.name !== attackFlag.room.name)) {
-            // 如果 healer 存在则只会在 healer 相邻且可以移动时才进行移动
-            if (!this.canMoveWith(healer)) return true
-            this.farMoveTo(attackFlag.pos)
-            return true
+            // 如果 creep 不在房间里 则一直向旗帜移动
+            if (!attackFlag.room || (attackFlag.room && this.room.name !== attackFlag.room.name)) {
+                // 如果 healer 存在则只会在 healer 相邻且可以移动时才进行移动
+                if (!this.canMoveWith(healer)) return true
+                this.farMoveTo(attackFlag.pos)
+                return true
+            }
+
+            // 如果到旗帜所在房间了
+            const structures = attackFlag.pos.lookFor(LOOK_STRUCTURES)
+            if (structures.length == 0) this.say('干谁?')
+
+            if (this.canMoveWith(healer)) this.moveTo(attackFlag)
+            this.dismantle(structures[0])
+        }else{
+            // 如果 creep 不在房间里 则一直向旗帜移动
+            if (!attackFlag.room || (attackFlag.room && this.room.name !== attackFlag.room.name)) {
+                this.farMoveTo(attackFlag.pos)
+                return true
+            }
+
+            // 如果到旗帜所在房间了
+            const structures = attackFlag.pos.lookFor(LOOK_STRUCTURES)
+            if (structures.length == 0) this.say('干谁?')
+
+            if(this.dismantle(structures[0]) == ERR_NOT_IN_RANGE) {
+                this.moveTo(attackFlag);
+            }
+            
         }
 
-        // 如果到旗帜所在房间了
-        const structures = attackFlag.pos.lookFor(LOOK_STRUCTURES)
-        if (structures.length == 0) this.say('干谁?')
-
-        if (this.canMoveWith(healer)) this.moveTo(attackFlag)
-        this.dismantle(structures[0])
     }
 
     /**
