@@ -299,7 +299,16 @@ const roleToRelease: { [role in BaseRoleConstant | AdvancedRoleConstant]: (room:
     'filler': releaseTransporter,
     'manager': releaseTransporter,
     'processor': releaseTransporter,
-
+    /**
+     * 发布拾荒者
+     * 
+     */
+    'ruiner': function(room:Room):OK {
+        creepApi.add(`${room.name} ruiner`, 'ruiner',{}, room.name);
+        room.log(`发布 runier`)
+        return OK;
+    },
+    
     /**
      * 发布升级者
      * @param room 要发布角色的房间

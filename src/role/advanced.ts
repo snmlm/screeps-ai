@@ -65,7 +65,7 @@ const roles: {
             if (!task) return false
 
             // 通过房间基础服务获取对应的建筑
-            const structure: AnyStructure = creep.room[task.source]
+            const structure: AnyStructure|Ruin = creep.room[task.source]
             if (!structure) {
                 creep.room.deleteCurrentCenterTask()
                 return false

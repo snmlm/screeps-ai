@@ -282,6 +282,62 @@ const roles: {
         bodys: 'manager'
     }),
 
+
+    /**
+     * 填充单位
+     * 从 container 中获取能量 > 执行房间物流任务
+     * 在空闲时间会尝试把能量运输至 storage
+     */
+     ruiner : (data: WorkerData): ICreepConfig => ({
+        // 能量来源（container）没了就自觉放弃
+        isNeed: room => {
+            return room.find(FIND_RUINS,{
+                filter: s => (s.structure.structureType == STRUCTURE_TERMINAL || s.structure.structureType == STRUCTURE_STORAGE)
+                && s.store[RESOURCE_ENERGY] > 0}).length>0
+        },
+        // 一直尝试从 container 里获取能量，不过拿到了就走
+        source: creep => {
+            if (creep.store[RESOURCE_ENERGY] > 0) return true
+
+            let source: Ruin
+            if (!creep.memory.sourceId) {
+                const ruins = creep.room.find(FIND_RUINS,{
+                    filter: s => (s.structure.structureType == STRUCTURE_TERMINAL || s.structure.structureType == STRUCTURE_STORAGE)
+                    && s.store[RESOURCE_ENERGY] > 0})
+                if(ruins.length > 0){
+                    source = ruins[0];
+                    creep.memory.sourceId = ruins[0].id;
+                }else{
+                    creep.suicide();
+                }
+            }
+            else source = Game.getObjectById(creep.memory.sourceId)
+
+            if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && source instanceof Ruin) delete creep.memory.sourceId
+        },
+        // 维持房间能量填充
+        target: creep => {
+            const task = getRoomTransferTask(creep.room)
+
+            // 只会执行能量填充任务
+            if (task && (task.type === ROOM_TRANSFER_TASK.FILL_EXTENSION || task.type === ROOM_TRANSFER_TASK.FILL_TOWER)) {
+                return transferTaskOperations[task.type].target(creep, task)
+            }
+            
+            // 空闲时间会尝试把能量存放到 storage 里
+            if (!creep.room.storage) return false
+
+            const source = Game.getObjectById<Ruin>(creep.memory.sourceId)
+            // source container 还有 harvester 维护时才会把能量转移至 storage
+            // 否则结合 source 阶段，filler 会在 container 等待老化时在 storage 旁边无意义举重
+            if (source && source.store[RESOURCE_ENERGY] > 0) creep.transferTo(creep.room.storage, RESOURCE_ENERGY)
+            else creep.say('💤')
+
+            if (creep.store[RESOURCE_ENERGY] <= 0) return true
+        },
+        bodys: 'manager'
+    }),
+
     /**
      * 升级者
      * 不会采集能量，只会从指定目标获取能量

@@ -81,7 +81,8 @@ type BaseRoleConstant =
     'filler' |
     'builder' |
     'repairer'|
-    'roader'
+    'roader'|
+    'ruiner'
 
 // 房间高级运营
 type AdvancedRoleConstant = 
