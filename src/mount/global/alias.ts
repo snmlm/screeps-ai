@@ -102,6 +102,13 @@ export default [
                                 functionName: 'base'
                             },
                             {
+                                title: '删除对应方案的creep配置',
+                                params: [
+                                    { name: 'roomName', desc: '要删除的房间' }
+                                ],
+                                functionName: 'unclaim'
+                            },
+                            {
                                 title: '全局发送资源',
                                 describe: '会遍历所有房间搜索资源并发送直到总量到达指定数量',
                                 params: [

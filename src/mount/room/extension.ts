@@ -208,7 +208,13 @@ export default class RoomExtension extends RoomShortcut {
     /**
      * 查找房间中的有效能量来源
      */
-    public getAvailableSource(): StructureTerminal | StructureStorage | StructureContainer | Source {
+    public getAvailableSource(): StructureTerminal | StructureStorage | StructureContainer | Source | Ruin {
+        const ruins = this.find(FIND_RUINS,{
+            filter: s => (s.structure.structureType == STRUCTURE_TERMINAL || s.structure.structureType == STRUCTURE_STORAGE)
+            && s.store[RESOURCE_ENERGY] > 0});
+        if(ruins){
+            return ruins[0];
+        }
         // terminal 或 storage 里有能量就优先用
         if (this.terminal && this.terminal.store[RESOURCE_ENERGY] > 10000) return this.terminal
         if (this.storage && this.storage.store[RESOURCE_ENERGY] > 100000) return this.storage

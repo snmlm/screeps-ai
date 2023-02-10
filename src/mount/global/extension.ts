@@ -86,6 +86,26 @@ export default {
     },
 
     /**
+     * 对指定房间删除creep配置
+     * 
+     * @param roomName 房间名
+     */
+     unclaim(roomName: string) {
+        for (const name in Memory.rooms) {
+            if(name === roomName){
+                delete Memory.rooms[name];
+            }
+        }
+        for (const name in Memory.creepConfigs) {
+            const config = name.split(" ");
+            if(config[0] === roomName){
+                delete Memory.creepConfigs[name];
+            }
+        }
+
+    },
+
+    /**
      * 全局发送资源到指定房间
      * 会检查哪个房间包含指定资源，并调用 Room.giver 方法发送资源
      * 

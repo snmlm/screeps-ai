@@ -313,7 +313,8 @@ const roles: {
         isNeed: () => {
             const targetRoom = Game.rooms[data.targetRoomName]
             // 如果房间造好了 terminal，自己的使命就完成了
-            if (!targetRoom || (targetRoom.terminal && targetRoom.terminal.my)) return false
+            //if (!targetRoom || (targetRoom.terminal && targetRoom.terminal.my)) return false
+            if (!targetRoom || targetRoom.controller.level >= 4) return false
 
             return true
         },
@@ -334,7 +335,7 @@ const roles: {
             if (creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) return true
 
             // 获取有效的能量来源
-            let source: StructureStorage | StructureTerminal | StructureContainer | Source
+            let source: StructureStorage | StructureTerminal | StructureContainer | Source |Ruin
             if (!creep.memory.sourceId) {
                 source = creep.room.getAvailableSource()
                 creep.memory.sourceId = source.id
@@ -342,7 +343,7 @@ const roles: {
             else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就改了）
-            if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && source instanceof Structure) delete creep.memory.sourceId
+            if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && (source instanceof Structure || source instanceof Ruin)) delete creep.memory.sourceId
         },
         target: creep => {
             // 执行建造之后检查下是不是都造好了，如果是的话这辈子就不会再建造了，等下辈子出生后再检查（因为一千多 tick 基本上不会出现新的工地）
@@ -365,7 +366,7 @@ const roles: {
         isNeed: () => {
             const targetRoom = Game.rooms[data.targetRoomName]
             // 如果房间到 6 级了就任务完成
-            if (!targetRoom || targetRoom.controller.level >= 6) return false
+            if (!targetRoom || targetRoom.controller.level >= 4) return false
 
             return true
         },
@@ -386,7 +387,7 @@ const roles: {
             if (creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) return true
 
             // 获取有效的能量来源
-            let source: StructureStorage | StructureTerminal | StructureContainer | Source
+            let source: StructureStorage | StructureTerminal | StructureContainer | Source | Ruin
             if (!creep.memory.sourceId) {
                 source = creep.room.getAvailableSource()
                 creep.memory.sourceId = source.id
@@ -394,7 +395,7 @@ const roles: {
             else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就改了）
-            if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && source instanceof Structure) delete creep.memory.sourceId
+            if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && (source instanceof Structure || source instanceof Ruin)) delete creep.memory.sourceId
         },
         target: creep => {
             creep.upgrade()
