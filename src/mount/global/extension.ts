@@ -91,6 +91,11 @@ export default {
      * @param roomName 房间名
      */
      unclaim(roomName: string) {
+        for (const name in Memory.stats.rooms) {
+            if(name === roomName){
+                delete Memory.stats.rooms[name];
+            }
+        }
         for (const name in Memory.rooms) {
             if(name === roomName){
                 delete Memory.rooms[name];

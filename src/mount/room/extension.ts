@@ -774,11 +774,13 @@ export default class RoomExtension extends RoomShortcut {
        const labs = this.find(FIND_MY_STRUCTURES, {
            filter: s => s.structureType == STRUCTURE_LAB
        })
-       labs.forEach(lab => {
-           if (lab.pos.isEqualTo(lab1Flag.pos) || lab.pos.isEqualTo(lab2Flag.pos)) this.memory.lab.inLab.push(lab.id)
-           else this.memory.lab.outLab[lab.id] = 0
-       })
-
+       if(labs.length > 2){
+            labs.forEach(lab => {
+                if (lab.pos.isEqualTo(lab1Flag.pos) || lab.pos.isEqualTo(lab2Flag.pos)) this.memory.lab.inLab.push(lab.id)
+                else this.memory.lab.outLab[lab.id] = 0
+            })
+       }
+      
        //lab1Flag.remove()
        //lab2Flag.remove()
 
