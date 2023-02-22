@@ -107,7 +107,7 @@ export const layout = {
  */
 export const planLayout = function(room: Room): OK | ERR_NOT_OWNER | ERR_NOT_FOUND {
     // 玩家指定了不运行自动布局，或者房间不属于自己，就退出
-    if (room.memory.noLayout || !room.controller || !room.controller.my) return ERR_NOT_OWNER
+    if (room.memory.noLayout || !room.controller || !room.controller.my || room.memory.onlyUp) return ERR_NOT_OWNER
 
     // 当前需要检查那几个等级的布局
     const planLevel = Array(room.controller.level).fill(undefined).map((_, index) => index + 1)

@@ -370,6 +370,21 @@ const roles: {
         },
         bodys: 'upgrader'
     }),
+    upgraderonly: (data: WorkerData): ICreepConfig => ({
+        source: creep => {
+            // 因为只会从建筑里拿，所以只要拿到了就去升级
+            if (creep.store.getFreeCapacity(RESOURCE_ENERGY) === 0) return true
+
+            const source : Source = Game.getObjectById(data.sourceId)
+            if(source) { 
+                creep.getEngryFrom(source)
+            }
+        },
+        target: creep => {
+            if (creep.upgrade() === ERR_NOT_ENOUGH_RESOURCES) return true
+        },
+        bodys: 'upgrader'
+    }),
 
     /**
      * 建筑者
@@ -403,7 +418,7 @@ const roles: {
             else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就不改了）
-            if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && (source instanceof Structure || source instanceof Ruin)) delete creep.memory.sourceId
+            if (source && creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && (source instanceof Structure || source instanceof Ruin)) delete creep.memory.sourceId
         },
         target: creep => {
             // 有新墙就先刷新墙

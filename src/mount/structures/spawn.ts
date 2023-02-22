@@ -113,6 +113,9 @@ export default class SpawnExtension extends StructureSpawn {
         }else if (bodyType == 'manager'){
             return generateBody(this.room.energyAvailable,bodyConfigs1.manager.default.pattern,
                 bodyConfigs1.manager.default.sizeLimit)
+        }else if (bodyType == 'reiver'){
+            return generateBody(this.room.energyAvailable,bodyConfigs1.reiver.default.pattern,
+                bodyConfigs1.reiver.default.sizeLimit)
         }else if (bodyType == 'worker'){
             return generateBody(this.room.energyAvailable,bodyConfigs1.worker.default.pattern,
                 bodyConfigs1.worker.default.sizeLimit)

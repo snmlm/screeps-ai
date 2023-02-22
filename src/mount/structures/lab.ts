@@ -223,7 +223,7 @@ export default class LabExtension extends StructureLab {
         }
         // 合成不了
         else {
-            // this.log(`无法合成 ${resource.target}`, 'yellow')
+            this.log(`${this.room.name} 无法合成 ${resource.target}`, 'yellow')
             this.setNextIndex()
         }
     }

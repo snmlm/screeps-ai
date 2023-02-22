@@ -141,7 +141,7 @@ const roles: {
                 }
                 
                 // 乘以 3 是去一趟，回来的时候走的慢需要两倍的时间再加上沼泽可能更慢，40 是冗余
-                if (creep.ticksToLive >= flag.memory.travelTime * 3 + 40) return true
+                if (creep.ticksToLive >= flag.memory.travelTime * 2 + 20) return true
                 else {
                     creep.suicide()
                     return false
@@ -149,7 +149,7 @@ const roles: {
             }
             else creep.farMoveTo(targetStructure.pos)
         },
-        bodys: 'manager'
+        bodys: 'reiver'
     }),
 
     /**
@@ -343,7 +343,7 @@ const roles: {
             else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就改了）
-            if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && (source instanceof Structure || source instanceof Ruin)) delete creep.memory.sourceId
+            if (source && creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && (source instanceof Structure || source instanceof Ruin)) delete creep.memory.sourceId
         },
         target: creep => {
             // 执行建造之后检查下是不是都造好了，如果是的话这辈子就不会再建造了，等下辈子出生后再检查（因为一千多 tick 基本上不会出现新的工地）
@@ -395,7 +395,7 @@ const roles: {
             else source = Game.getObjectById(creep.memory.sourceId)
 
             // 之前用的能量来源没能量了就更新来源（如果来源已经是 source 的话就改了）
-            if (creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && (source instanceof Structure || source instanceof Ruin)) delete creep.memory.sourceId
+            if (source && creep.getEngryFrom(source) === ERR_NOT_ENOUGH_RESOURCES && (source instanceof Structure || source instanceof Ruin)) delete creep.memory.sourceId
         },
         target: creep => {
             creep.upgrade()

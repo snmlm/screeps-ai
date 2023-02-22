@@ -123,7 +123,7 @@ const releasePlans: CreepReleasePlans = {
         // 发布计划
         plans: [
             // 8 级时的特殊判断
-            ({ room, controllerLevel, ticksToDowngrade, upgradeLinkId }: UpgraderPlanStats) => {
+            /*({ room, controllerLevel, ticksToDowngrade, upgradeLinkId }: UpgraderPlanStats) => {
                 if (controllerLevel < 8) return false
                 // 掉级还早，不发布 upgrader 了
                 if (ticksToDowngrade >= 100000) return true
@@ -132,7 +132,7 @@ const releasePlans: CreepReleasePlans = {
                 addUpgrader(room.name, [ 0 ], upgradeLinkId)
 
                 return true
-            },
+            },*/
         
             // 优先用 upgradeLink
             ({ room, upgradeLinkId,storageId,storageEnergy }: UpgraderPlanStats) => {
@@ -180,6 +180,19 @@ const releasePlans: CreepReleasePlans = {
             //     return true
             // },
 
+            ({room}: UpgraderPlanStats) => {
+                if(!room.memory.onlyUp) return false;
+                // 有援建单位，每个 container 少发布一个 upgrader
+                const upgraderIndexs = [ 0, 1, 2 ]
+ 
+                // 遍历所有 container，发布对应数量的 upgrader
+                room.memory.sourceIds.forEach((sourceId, index) => {
+                    upgraderIndexs.map(i => index + (i * 2)).forEach(i => creepApi.add(`${room.name} upgraderonly${i}`, 'upgraderonly', { sourceId }, room.name))
+                })
+
+                room.log(`将从 source 获取能量，发布数量 * ${room.memory.sourceIds.length * upgraderIndexs.length}`, 'upgraderonly', 'green')
+                return true
+            },
             // 兜底，从 sourceContainer 中获取能量
             ({ room, sourceContainerIds,storageId}: UpgraderPlanStats) => {
                 //有了容器，就不从container里获取
@@ -316,6 +329,18 @@ const roleToRelease: { [role in BaseRoleConstant | AdvancedRoleConstant]: (room:
     'upgrader': function(room: Room): OK {
         // 先移除所有的配置项
         for (let i = 0; i < MAX_UPGRADER_NUM; i++) creepApi.remove(`${room.name} upgrader${i}`)
+    
+        // 然后重新发布
+        planChains.upgrader(releasePlans.upgrader.getStats(room))
+        return OK
+    },
+    /**
+     * 发布升级者
+     * @param room 要发布角色的房间
+     */
+     'upgraderonly': function(room: Room): OK {
+        // 先移除所有的配置项
+        for (let i = 0; i < MAX_UPGRADER_NUM; i++) creepApi.remove(`${room.name} upgraderonly${i}`)
     
         // 然后重新发布
         planChains.upgrader(releasePlans.upgrader.getStats(room))

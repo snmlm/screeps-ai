@@ -82,7 +82,8 @@ type BaseRoleConstant =
     'builder' |
     'repairer'|
     'roader'|
-    'ruiner'
+    'ruiner'|
+    'upgraderonly'
 
 // 房间高级运营
 type AdvancedRoleConstant = 
@@ -306,7 +307,8 @@ type BodyAutoConfigConstant =
     'healerx' |
     'dismantler' |
     'dismantlerL' |
-    'remoteHarvester'
+    'remoteHarvester'|
+    'reiver'
 
 /**
  * 建筑拓展
@@ -661,6 +663,8 @@ interface RoomMemory {
     centerCandidates?: [ number, number ][]
     // 是否关闭自动布局，该值为 true 时将不会对本房间运行自动布局
     noLayout: boolean
+    // 是否只升级，该值为 true时将不会对本房间运行自动布局
+    onlyUp: boolean
 
     // observer 内存
     observer: {

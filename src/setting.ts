@@ -58,6 +58,12 @@ export const bodyConfigs1 = {
 			sizeLimit: Infinity,
 		}
     },
+    reiver: {
+        default: {
+			pattern  : [CARRY, MOVE],
+			sizeLimit: Infinity,
+		}
+    },
     worker:{
         default: {
 			pattern: [WORK, CARRY, MOVE],
@@ -139,6 +145,29 @@ export const bodyConfigs: BodyConfigs = {
      * 负责转移基地资源的 creep
      */
     manager: getBodyConfig(
+        { [CARRY]: 2, [MOVE]: 1 },//150
+        { [CARRY]: 4, [MOVE]: 2 },//300
+        { [CARRY]: 6, [MOVE]: 3 },//450
+        { [CARRY]: 8, [MOVE]: 4 },//600
+        { [CARRY]: 10, [MOVE]: 5 },//750
+        { [CARRY]: 14, [MOVE]: 6 },//
+        { [CARRY]: 20, [MOVE]: 7 },
+        { [CARRY]: 32, [MOVE]: 8 }
+        // { [CARRY]: 2, [MOVE]: 1 },
+        // { [CARRY]: 3, [MOVE]: 2 },
+        // { [CARRY]: 4, [MOVE]: 2 },
+        // { [CARRY]: 5, [MOVE]: 3 },
+        // { [CARRY]: 8, [MOVE]: 4 },
+        // { [CARRY]: 14, [MOVE]: 7 },
+        // { [CARRY]: 20, [MOVE]: 10 },
+        // { [CARRY]: 32, [MOVE]: 16 }
+    ),
+
+    /**
+     * 房间物流管理单位
+     * 负责转移基地资源的 creep
+     */
+     reiver: getBodyConfig(
         { [CARRY]: 2, [MOVE]: 1 },//150
         { [CARRY]: 4, [MOVE]: 2 },//300
         { [CARRY]: 6, [MOVE]: 3 },//450
