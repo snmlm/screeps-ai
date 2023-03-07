@@ -484,8 +484,8 @@ export default class TerminalExtension extends StructureTerminal {
             //     }
             // }
             const history = Game.market.getHistory(resourceType)
-            if (history.length <= 0) this.log(`无法为 ${resourceType} ${type} 创建订单，未找到历史交易记录`, 'yellow', true)
-            else price = history[0].avgPrice
+            if (!history.length || history.length == 0) this.log(`无法为 ${resourceType} ${type} 创建订单，未找到历史交易记录`, 'yellow', true)
+            else price = history[history.length-1].avgPrice
         }
         // 买单挂最高
         else {

@@ -789,7 +789,7 @@ export const commodityMax = {
  * miner 的矿物采集上限
  * 当 terminal 中的资源多余这个值时，miner 将不再继续采矿
  */
-export const minerHervesteLimit = 200000
+export const minerHervesteLimit = 50000
 
 /**
  * 交易时的购买区间限制

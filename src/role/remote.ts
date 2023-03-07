@@ -206,6 +206,7 @@ const roles: {
 
                 // 添加签名
                 if (data.signText) creep.signController(controller, data.signText)
+                else creep.signController(controller, '')
 
                 const flag = Game.flags[getName.flagBaseCenter(creep.room.name)]
                 // 用户已经指定了旗帜了
@@ -239,7 +240,7 @@ const roles: {
             else if (claimResult === ERR_GCL_NOT_ENOUGH) creep.log(`CCL 不足，无法占领`)
             else creep.say(`占领 ${claimResult}`)
         },
-        bodys: [ MOVE,MOVE,MOVE,MOVE,CLAIM ]//200+600
+        bodys: [ MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,MOVE,CLAIM ]//200+600
     }),
 
     /**

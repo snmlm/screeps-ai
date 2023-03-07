@@ -29,11 +29,15 @@ export function calcBodyPart(bodySet: BodySet): BodyPartConstant[] {
  */
 export function doing(...hashMaps: object[]): void {
     hashMaps.forEach((obj, index) => {
-        let startCost = Game.cpu.getUsed()
+        let startCost = 0 
+        if (Memory.showCost) startCost = Game.cpu.getUsed()
 
         // 遍历执行 work
         Object.values(obj).forEach(item => {
+            let startCost1 = 0 
+            if (Memory.showCost) startCost1 = Game.cpu.getUsed()
             if (item.work) item.work()
+            if (Memory.showCost) log(`消耗 ${Game.cpu.getUsed() - startCost1}`, [ `[${item.name}]` ])
         })
 
         // 如果有需求的话就显示 cpu 消耗
