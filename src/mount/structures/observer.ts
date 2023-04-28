@@ -38,7 +38,7 @@ export class ObserverExtension extends StructureObserver {
             delete this.room.memory.observer.checkRoomName
             return
         }
-        // this.log(`搜索房间 ${room.name}`)
+        this.log(`搜索房间 ${room.name}`)
 
         // 还没插旗的话就继续查找 deposit
         if (memory.depositNumber < memory.depositMax) {

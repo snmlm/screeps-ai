@@ -74,7 +74,7 @@ export default class RoomConsole extends RoomExtension {
      * @param roomName 目标房间名
      * @param amount 要发送的数量, 默认 100k
      */
-    public givee(roomName: string, amount: number = 100000): string {
+    public givee(roomName: string, amount: number = 10000): string {
         const logs = []
         if (!this.terminal) return `[能量共享] 未发现 Terminal，共享终止`
         // 如果在执行其他任务则将其覆盖，因为相对于用户操作来说，其他模块发布的资源共享任务优先级肯定要低
@@ -362,7 +362,13 @@ export default class RoomConsole extends RoomExtension {
     public clearwall(): string {
         // 找到所有不是自己的墙壁
         const wall = this.find(FIND_STRUCTURES, {
-            filter: s => s.structureType === STRUCTURE_WALL || (s.structureType === STRUCTURE_RAMPART && !s.my)
+            filter: s => (s.structureType === STRUCTURE_WALL && !s.my)
+            || (s.structureType === STRUCTURE_RAMPART && !s.my)
+            || (s.structureType === STRUCTURE_EXTENSION && !s.my)
+            || (s.structureType === STRUCTURE_TOWER && !s.my)
+            || (s.structureType === STRUCTURE_SPAWN && !s.my)
+            || (s.structureType === STRUCTURE_LAB && !s.my)
+            || (s.structureType === STRUCTURE_LINK && !s.my)
         })
         if (wall.length <= 0) return `[${this.name}] 未找到墙壁`
 

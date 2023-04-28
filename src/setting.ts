@@ -49,7 +49,7 @@ export const bodyConfigs1 = {
 		},
 		rcl8: {
 			pattern  : [WORK, WORK, WORK, CARRY, MOVE],
-			sizeLimit: 3,
+			sizeLimit: 5,
 		},
     },
     manager: {
